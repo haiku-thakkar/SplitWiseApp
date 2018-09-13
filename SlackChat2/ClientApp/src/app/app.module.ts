@@ -7,28 +7,36 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { ChatComponent } from './chat/chat.component';
+import { LoginComponent } from './login/login.component';
+import { ChatService } from './Services/chat.service';
+import { UserService } from './Services/user.service';
+import { MessageService } from './Services/message.service';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    ChatComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    HttpModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: '', component: LoginComponent, pathMatch: 'full' },
+      { path: 'home/:sid', component: HomeComponent },
+      { path: 'login', component: LoginComponent },
+      { path: 'chat', component: ChatComponent },
+      { path: 'chat/:sid/:rid', component: ChatComponent },
+      { path: '**', component: LoginComponent },
     ])
   ],
-  providers: [],
+  providers: [ChatService, UserService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
